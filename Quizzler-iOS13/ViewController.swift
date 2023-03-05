@@ -16,10 +16,19 @@ class ViewController: UIViewController {
     @IBOutlet weak var progressBar: UIProgressView!
     
     let quiz = [
-        ["JavaScript is a compiled language.","false"],
-        ["JavaScript is only used for client-side scripting.", "false"],
-        ["JavaScript is a statically typed language.", "false"],
-        ["JavaScript is an object-oriented language.", "true"],
+        Question(q: "A slug's blood is green.", a: "True"),
+        Question(q: "Approximately one quarter of human bones are in the feet.", a: "True"),
+        Question(q: "The total surface area of two human lungs is approximately 70 square metres.", a: "True"),
+        Question(q: "In West Virginia, USA, if you accidentally hit an animal with your car, you are free to take it home to eat.", a: "True"),
+        Question(q: "In London, UK, if you happen to die in the House of Parliament, you are technically entitled to a state funeral, because the building is considered too sacred a place.", a: "False"),
+        Question(q: "It is illegal to pee in the Ocean in Portugal.", a: "True"),
+        Question(q: "You can lead a cow down stairs but not up stairs.", a: "False"),
+        Question(q: "Google was originally called 'Backrub'.", a: "True"),
+        Question(q: "Buzz Aldrin's mother's maiden name was 'Moon'.", a: "True"),
+        Question(q: "The loudest sound produced by any animal is 188 decibels. That animal is the African Elephant.", a: "False"),
+        Question(q: "No piece of square dry paper can be folded in half more than 7 times.", a: "False"),
+        Question(q: "Chocolate affects a dog's heart and nervous system; a few ounces are enough to kill a small dog.", a: "True")
+
     ]
     
     var questionNumber = 0
@@ -32,29 +41,51 @@ class ViewController: UIViewController {
 
     @IBAction func answerButtonPressed(_ sender: UIButton) {
         let userAnswer = sender.currentTitle // Give the current title of button True or False
-        let actualAnswer = quiz[questionNumber][1].capitalized   // Give the answer from array quiz and conver string to capitalized
+        let actualAnswer = quiz[questionNumber].answer.capitalized   // Give the answer from array quiz and conver string to capitalized
+   
         
             if userAnswer! == actualAnswer{
-                print("Rigth!")
+                sender.backgroundColor = UIColor.green
+               // print(trueButton.backgroundColor)
             } else {
-                 print("Wrong!")
+                sender.backgroundColor = UIColor.red
+               // print(falseButton.backgroundColor)
             }
+        
+       
         
         if questionNumber + 1 < quiz.count {
             questionNumber += 1;
         } else {
             questionNumber = 0
         }
-            
-  
-        updateUI()
-       
+   
+       Timer.scheduledTimer(timeInterval: 2.0, target: self, selector: #selector(updateUI), userInfo: nil, repeats: false)
+    
+
+        
     }
     
-    func updateUI(){
-        questionLabel.text = quiz[questionNumber][0]
+    @objc func updateUI(){
+        questionLabel.text = quiz[questionNumber].question
+        trueButton.backgroundColor = UIColor.clear
+        falseButton.backgroundColor = UIColor.clear
+        
         
     }
     
 }
 
+/*
+ ### D**ebugging process tips** 🤓
+
+ 1. What did you expect your code to do?
+    When user press the button true or false, check the userAnswer and actualAnswer compared and return feedback to user changed color button. Green for true answer and Red color for wrong answer.
+ 2. What happened instead?
+    When user press buttón dont change background color and pass to next question
+ 3. What does your expectation depend upon?
+    
+ 4. How can we test the things our expectations depend on?
+ 5. Fix our code to make reality match expectations
+ 
+ */
